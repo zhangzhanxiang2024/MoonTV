@@ -1414,17 +1414,37 @@ function PlayPageClient() {
           },
         ],
         // 控制栏配置
-        controls: [
-          {
-            position: 'left',
-            index: 13,
-            html: '<i class="art-icon flex"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" fill="currentColor"/></svg></i>',
-            tooltip: '播放下一集',
-            click: function () {
-              handleNextEpisode();
-            },
-          },
-        ],
+controls: [
+  {
+    position: 'left',
+    index: 13,
+    html: '<i class="art-icon flex"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" fill="currentColor"/></svg></i>',
+    tooltip: '播放下一集',
+    click: function () {
+      handleNextEpisode();
+    },
+  },
+  {
+    position: 'left',
+    index: 14,
+    html: '<i class="art-icon flex"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M1 18h2a9 9 0 0 1 9 9v2h-2a11 11 0 0 0-11-11zm0-5h4a11 11 0 0 1 11 11v4h-4a15 15 0 0 0-15-15zm0-5h6a15 15 0 0 1 15 15v6h-6a21 21 0 0 0-21-21z" fill="currentColor"/></svg></i>',
+    tooltip: '投屏到电视',
+    click: function () {
+      if (window?.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            type: 'cast',
+            url: artPlayerRef.current?.url,
+            title: artPlayerRef.current?.title,
+          })
+        );
+      } else {
+        alert('未检测到投屏功能支持');
+      }
+    },
+  },
+],
+
       });
 
       // 监听播放器事件
